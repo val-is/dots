@@ -1,0 +1,156 @@
+set $mod Mod4
+set $alt Mod1
+floating_modifier $mod
+
+# safety fallback. most apps use their own fonts
+font pango:DejaVu Sans Mono 8
+
+set $browser    firefox
+set $term       kitty
+
+set $center move position center
+
+default_border              none
+hide_edge_borders           none
+for_window [class="^.*"]    border pixel 0
+for_window [title="^.*"]    border pixel 0
+
+for_window [class="feh"]        floating enable
+for_window [class="wine"]       floating enable
+for_window [class="Display"]    floating enable
+for_window [instance='lock']    floating enable; focus floating
+
+gaps inner 10
+gaps outer 10
+gaps top 60
+gaps bottom 40
+
+bindsym $mod+Return exec $term
+
+bindsym $mod+equal scratchpad show
+bindsym $mod+minus move scratchpad
+
+bindsym $mod+Shift+q kill
+
+
+set $left   h
+set $down   j
+set $up     k
+set $right  l
+
+bindsym $mod+$left  focus left
+bindsym $mod+$down  focus down
+bindsym $mod+$up    focus up
+bindsym $mod+$right focus right
+
+bindsym $mod+Left   focus left
+bindsym $mod+Down   focus down
+bindsym $mod+Up     focus up
+bindsym $mod+Right  focus right
+
+bindsym $mod+z      focus output left
+bindsym $mod+x      focus output right
+
+bindsym $mod+Shift+$left    move left
+bindsym $mod+Shift+$down    move down
+bindsym $mod+Shift+$up      move up
+bindsym $mod+Shift+$right   move right
+
+bindsym $mod+Shift+Left     move left
+bindsym $mod+Shift+Down     move down
+bindsym $mod+Shift+Up       move up
+bindsym $mod+Shift+Right    move right
+
+set $resize 30
+
+mode "resize" {
+    # change size bindings
+    bindsym $right   resize shrink width $resize px or $resize ppt
+    bindsym $down   resize grow height $resize px or $resize ppt
+    bindsym $up     resize shrink height $resize px or $resize ppt
+    bindsym $left  resize grow width $resize px or $resize ppt
+
+    bindsym Right    resize shrink width $resize px or $resize ppt
+    bindsym Down    resize grow height $resize px or $resize ppt
+    bindsym Up      resize shrink height $resize px or $resize ppt
+    bindsym Left   resize grow width $resize px or $resize ppt
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+bindsym $mod+b split h
+bindsym $mod+v split v
+
+bindsym $mod+f fullscreen toggle
+
+bindsym $mod+Shift+space floating toggle; $center
+
+bindsym $mod+Shift+Tab focus mode_toggle
+
+# mostly hardcoded for my display. change as needed
+bindsym $mod+Ctrl+space floating toggle; resize set 850px 950px; $center
+
+bindsym $mod+c $center
+
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+exec    picom       --config $HOME/.config/picom/picom.conf
+exec    dunst
+exec    unclutter
+
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+set $back       F10
+set $pause      F11
+set $forwards   F12
+set $voldown    F7
+set $volup      F8
+
+bindsym $mod+F10    exec playerctl previous
+bindsym $mod+F11    exec playerctl play-pause
+bindsym $mod+F12    exec playerctl next
+
+# depends on pulseaudio-equalizer
+bindsym $mod+F2     exec pactl set-sink-volume 0 -5%
+bindsym $mod+F3     exec pactl set-sink-volume 0 +5%
+
+bindsym $mod+d  exec rofi -show run
+bindsym $mod+s  exec rofi -show window
+
+# change as desired
+exec_always wal -i $HOME/resources/backgrounds/wakasagihime-underwater.jpg --saturate 0.8

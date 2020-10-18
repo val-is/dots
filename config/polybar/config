@@ -1,0 +1,280 @@
+; vim:ft=dosini
+
+; mostly unchanged from my old setup, only differences lie in monitor config
+
+[colors]
+; most of these colors should either be transparent or pulled from xrdb
+; xrdb is supposed to contain the pywal colors, so it should work in that way
+
+; the background colors; background is supposed to be darker
+background = #8a000000
+background-alt = #9a000000
+
+; foreground colors are the text colors
+foreground = ${xrdb:color7:#dfdfdf}
+foreground-alt = #555
+
+; primary and secondary accent colors
+primary = ${xrdb:color5:#458588}
+secondary = ${xrdb:color3:#689d6a}
+border = ${xrdb:color1:#689d6a}
+
+; alert color, should be red or something like that
+alert = #cc241d
+
+
+[bar/main]
+; the main bar that displays on top of my main monitor
+monitor = ${env:MONITOR:eDP-1}
+
+; let i3 control the position of the bar
+override-redirect = true
+
+; keep the bar at the top of the screen
+bottom = false
+
+; make the center plugins stay at the center of the screen
+fixed-center = true
+
+; make the bar span the entire screen
+width = 1500
+; and make it 27 pixels tall
+height = 27
+
+; bar offsets should be based around the width and height
+offset-x = 210
+offset-y = 16
+
+; set the foreground and background colors
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+; round the corners of the bar, or not. preferably not
+radius = 0
+
+; configure the under and overline color and sizes
+; not entirely sure what this does, not dealing with it
+line-size = 3
+line-color = #f00
+
+; values applied to all borders (~~what does yukari think about this?~~)
+border-size = 4
+; border-color = ${colors.border}
+border-color = ${colors.background}
+
+; spaces to add to the beginning or end of the bar
+padding-left = 0
+; padding-right might ned to be set to be something like 2 because of the tray
+padding-right = 2
+
+; spaces to add before and after each module
+module-margin-left = 1
+module-margin-right = 2
+
+; fonts. simple enough
+font-0 = undefined:fontformat=truetype:size=11:antialias=true;0
+;font-0 = fixed:pixelsize=10;1
+font-1 = unifont:fontformat=truetype:size=11:antialias=false;0
+font-2 = siji:pixelsize=11;1
+; these fonts are important so that the weeb text shows up correctly
+font-3 = Source Han Sans JP Medium:size=11;1
+font-4 = Noto Sans CJK JP:size=11
+
+; and configure what modules go where
+modules-left = i3
+modules-center = cmus
+modules-right = pulseaudio cpu wlan date powermenu
+
+; separator between each modules
+separator = //
+
+; opacity used for fade in/out
+; not entirely sure what this does, probably worth looking into it
+dim-value = 1.0
+
+; localization. this is in MURICA
+locale = en_US.UTF-8
+
+; SYSTEM TRAY CONFIGURATION
+; set the position and placement of the tray, if enabled
+; tray-position = right
+tray-position = none
+; make sure that the modules on the bar are relative to the tray
+tray-detached = false
+; max icon size for things on the tray
+tray-maxsize = 16
+; color for the tray container. it would be nice if this was the same as everything else
+tray-background = ${colors.background}
+; padding for icons on the tray
+tray-padding = 2
+
+; it's not really worth touching this since it'll make it so that the background image isn't drawn below the bar
+wm-restack = i3
+
+; make the cursor change when it's over things that can be interacted with
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+; set text dpi when being rendered -- zero makes polybar automatically calculate it
+dpi = 0
+
+
+; STANDARD MODULE CONFIGURATION
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+
+label-mode-padding = 2
+label-mode-foreground = ${colors.secondary}
+label-mode-background = ${colors.primary}
+
+; focused = Active workspace on focused monitor
+label-focused = %index%
+label-focused-background = ${colors.background}
+label-focused-underline = ${colors.primary}
+label-focused-padding = ${self.label-mode-padding}
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %index%
+label-unfocused-padding = ${self.label-mode-padding}
+
+; visible = Active workspace on unfocused monitor
+label-visible = %index%
+label-visible-background = ${self.label-focused-background}
+label-visible-underline = ${self.label-focused-underline}
+label-visible-padding = ${self.label-focused-padding}
+
+; urgent = Workspace with urgency hint set
+label-urgent = %index%
+label-urgent-background = ${colors.alert}
+label-urgent-padding = ${self.label-focused-padding}
+
+
+[module/cpu]
+; monitors cpu usage and things like that
+type = internal/cpu
+interval = 2
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground-alt}
+label = %percentage:2%%
+
+
+[module/wlan]
+type = internal/network
+interface = wlan0
+interval = 3.0
+
+format-connected = <ramp-signal> <label-connected>
+label-connected = %essid%
+
+format-disconnected =
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.foreground-alt}
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+ramp-signal-foreground = ${colors.foreground-alt}
+
+
+[module/date]
+type = internal/date
+interval = 5
+
+date = " %m/%d @"
+date-alt = " %d-%m-%Y"
+
+time = %I:%M %p
+time-alt = %H:%M:%S
+
+format-prefix = 
+format-prefix-foreground = ${colors.foreground-alt}
+
+label = %date% %time%
+
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume = <label-volume> <bar-volume>
+label-volume = %percentage%%
+label-volume-foreground = ${root.foreground}
+
+label-muted = muted
+label-muted-foreground = #666
+
+bar-volume-width = 10
+bar-volume-foreground-0 = ${colors.secondary}
+bar-volume-foreground-1 = ${colors.secondary}
+bar-volume-foreground-2 = ${colors.secondary}
+bar-volume-foreground-3 = ${colors.secondary}
+bar-volume-foreground-4 = ${colors.secondary}
+bar-volume-foreground-5 = #f5a70a
+bar-volume-foreground-6 = #ff5555
+bar-volume-gradient = false
+bar-volume-indicator = |
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.foreground-alt}
+
+
+; SEMI CUSTOM THINGS
+
+[module/powermenu]
+; used to handle power options and things like that
+type = custom/menu
+
+expand-right = true
+
+format-spacing = 1
+
+label-open = 
+label-open-foreground = ${colors.secondary}
+label-close =  cancel
+label-close-foreground = ${colors.secondary}
+label-separator = |
+label-separator-foreground = ${colors.foreground-alt}
+
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+menu-0-1 = power off
+menu-0-1-exec = menu-open-2
+
+menu-1-0 = cancel
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = reboot
+
+menu-2-0 = power off
+menu-2-0-exec = poweroff
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
+
+
+; POLYBAR GLOBAL SETTINGS
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+pseudo-transparency = false
+
+[global/wm]
+margin-top = 0
+margin-bottom = 16
+
+
+; CUSTOM MODULES
+; none yet lol :)
