@@ -129,7 +129,10 @@ bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
-exec    picom       --config $HOME/.config/picom/picom.conf
+bindsym $mod+m move workspace to output right
+bindsym $mod+n move workspace to output left
+
+exec    picom       --config $HOME/.config/picom/picom.conf --experimental-backends
 exec    dunst
 exec    unclutter
 
@@ -151,6 +154,9 @@ bindsym $mod+F3     exec pactl set-sink-volume 0 +5%
 
 bindsym $mod+d  exec rofi -show run
 bindsym $mod+s  exec rofi -show window
+bindsym $mod+e  exec rofi -show emoji -modi emoji
+
+bindsym $mod+p  exec i3lock-fancy-multimonitor -n -p
 
 # change as desired
-exec_always wal -i $HOME/resources/backgrounds/wakasagihime-underwater.jpg --saturate 0.8
+exec_always wal -i $HOME/resources/backgrounds/torii.jpg --saturate 1
