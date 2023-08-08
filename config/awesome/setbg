@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+nitrogen --set-zoom-fill --save $(/usr/bin/ls -d ~/op-wallpapers/*.jpg ~/op-wallpapers/*.jpeg ~/op-wallpapers/*.png | shuf -n 1)

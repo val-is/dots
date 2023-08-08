@@ -1,0 +1,9 @@
+#!/bin/sh
+
+start() {
+  [ -z "$(pidof -x $1)" ] && ${2:-$1} &
+}
+
+# Audio
+start pulseaudio start-pulseaudio-x11
+start volumeicon

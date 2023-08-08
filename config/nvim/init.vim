@@ -1,21 +1,7 @@
-call plug#begin()
-Plug 'preservim/nerdtree'
-Plug 'airblade/vim-gitgutter'
-Plug 'dylanaraps/wal.vim'
-Plug 'vimlab/split-term.vim'
-Plug 'tpope/vim-fugitive'
-Plug 'junegunn/limelight.vim'
-Plug 'junegunn/goyo.vim'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'reedes/vim-pencil'
-call plug#end()
-
 set encoding=UTF-8
 
 syntax enable
 syntax on
-
-colorscheme wal
 
 set tabstop=4
 set shiftwidth=4
@@ -30,6 +16,7 @@ set wildmenu
 set lazyredraw
 set showmatch
 set nofoldenable
+set nowrap
 
 set incsearch
 set hlsearch
@@ -37,6 +24,7 @@ set hlsearch
 set conceallevel=2
 
 inoremap kj <Esc>
+nnoremap ow :w<CR>
 
 nnoremap <C-g> :NERDTreeToggle<CR>
 
@@ -44,13 +32,3 @@ nmap <silent> <A-Up> :wincmd k<CR>
 nmap <silent> <A-Down> :wincmd j<CR>
 nmap <silent> <A-Left> :wincmd h<CR>
 nmap <silent> <A-Right> :wincmd l<CR>
-
-let g:airline_theme='violet'
-let g:airline_powerline_fonts=1
-
-let g:vim_markdown_math=1
-
-let NERDTreeShowHidden=1
-
-autocmd! User GoyoEnter Limelight
-autocmd! User GoyoLeave Limelight!
