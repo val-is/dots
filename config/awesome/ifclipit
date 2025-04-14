@@ -1,3 +1,0 @@
-pidof clipit >/dev/null && killall clipit && clipit || clipit
-sleep 0.1
-killall clipit

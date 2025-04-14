@@ -1,3 +1,0 @@
-pidof volumeicon >/dev/null && killall volumeicon && volumeicon || volumeicon
-sleep 0.1
-killall volumeicon

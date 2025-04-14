@@ -2,17 +2,14 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/valis/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-# ZSH_THEME="flazz"
 
-# ZSH_THEME="agnoster"
-ZSH_THEME="avit"
-# ZSH_THEME="lukerandall"
+ZSH_THEME="flazz"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -72,7 +69,7 @@ ZSH_THEME="avit"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git common-aliases pip)
+plugins=(git common-aliases fzf)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -84,11 +81,11 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='mvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -102,30 +99,20 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
-cat ~/.cache/wal/sequences
+# cat ~/.cache/wal/sequences
 
 export PATH=$PATH:~/.local/bin
-# export PATH=$PATH:~/resources/wal-discord/wal-discord
-export PATH=$PATH:~/go/bin
-export PATH=$PATH:/home/valis/.cargo/bin
 
-export EDITOR=nvim
+export EDITOR=vim
 export TERM=kitty
 
-alias vim="nvim"
-# alias scrot="escrotum"
+alias l="ls"
 alias hex="hexyl"
-# alias md="mdcat"
-# alias td="todo.sh"
-alias ranger="ranger && cat /home/valis/.cache/wal/sequences"
 
 HISTFILE=~/.histfile
-HISTSIZE=100000
-SAVEHIST=100000
+HISTSIZE=9999999
+SAVEHIST=9999999
 setopt autocd
 unsetopt beep
 
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
+[ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
